@@ -1,0 +1,17 @@
+.main-layout {
+  .sider {
+    padding: 0 10px;
+    .avatar {
+      color: #fff;
+      font-size: 20px;
+      padding: 15px 0;
+    }
+    .sider-logo {
+      padding: 25px 60px;
+      img {
+        width: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+}
