@@ -36,7 +36,7 @@ export function genericApi() {
   return axios.create({
     baseURL: "http://localhost:8070/api/v1",
     headers: headers,
-    withCredentials: true,
+    // withCredentials: true,
   });
 }
 
