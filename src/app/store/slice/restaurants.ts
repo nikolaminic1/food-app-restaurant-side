@@ -1,57 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  categoryDetailState,
   restaurantDetailState,
   restaurantsListState,
 } from "../../initial_state/restaurants";
-import {
-  getRestaurantDetail,
-  getRestaurantsList,
-} from "../../service/restaurants";
 import { Status } from "../../service/Status";
-
-const restaurantsListSlice = createSlice({
-  name: "restaurantsList",
-  initialState: restaurantsListState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(getRestaurantsList.pending, (state, action) => {
-      return {
-        ...state,
-        status: Status.LOADING,
-      };
-    });
-    builder.addCase(getRestaurantsList.fulfilled, (state, action) => {
-      console.log(action.payload);
-
-      return {
-        ...state,
-        status: Status.SUCCEED,
-        restaurants: action.payload,
-      };
-    });
-    builder.addCase(getRestaurantsList.rejected, (state, action) => {
-      return {
-        ...state,
-        status: Status.REJECTED,
-        message: String(action.payload),
-        isAuthenticated: false,
-      };
-    });
-  },
-});
+import {
+  getCategoryDetail,
+  getRestaurantDetailOwner,
+} from "../../service/restaurants";
 
 const restaurantDetailSlice = createSlice({
   name: "restaurantDetail",
   initialState: restaurantDetailState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getRestaurantDetail.pending, (state, action) => {
+    builder.addCase(getRestaurantDetailOwner.pending, (state, action) => {
       return {
         ...state,
         status: Status.LOADING,
       };
     });
-    builder.addCase(getRestaurantDetail.fulfilled, (state, action) => {
+    builder.addCase(getRestaurantDetailOwner.fulfilled, (state, action) => {
       console.log(action.payload);
 
       return {
@@ -60,16 +30,44 @@ const restaurantDetailSlice = createSlice({
         restaurant: action.payload,
       };
     });
-    builder.addCase(getRestaurantDetail.rejected, (state, action) => {
+    builder.addCase(getRestaurantDetailOwner.rejected, (state, action) => {
       return {
         ...state,
         status: Status.REJECTED,
         message: String(action.payload),
-        isAuthenticated: false,
       };
     });
   },
 });
 
-export const restaurantsListReducer = restaurantsListSlice.reducer;
+const categoryDetailSlice = createSlice({
+  name: "categoryDetail",
+  initialState: categoryDetailState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getCategoryDetail.pending, (state, action) => {
+      return {
+        ...state,
+        status: Status.LOADING,
+      };
+    });
+    builder.addCase(getCategoryDetail.fulfilled, (state, action) => {
+      console.log(action.payload);
+
+      return {
+        ...state,
+        status: Status.SUCCEED,
+        category: action.payload,
+      };
+    });
+    builder.addCase(getCategoryDetail.rejected, (state, action) => {
+      return {
+        ...state,
+        status: Status.REJECTED,
+      };
+    });
+  },
+});
+
 export const restaurantDetailReducer = restaurantDetailSlice.reducer;
+export const categoryDetailReducer = categoryDetailSlice.reducer;

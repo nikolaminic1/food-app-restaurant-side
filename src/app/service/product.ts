@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { authApi, genericApi } from "./Api";
+import { authApi } from "./Api";
 import { AxiosError } from "axios";
 
-export const getRestaurantDetailOwner = createAsyncThunk(
-  "/getRestaurantDetail",
-  async () => {
+export const getProductDetail = createAsyncThunk(
+  "/getProductDetail",
+  async (id: number) => {
     try {
-      const response = await authApi().get(`/business/restaurant`);
+      const response = await authApi().get(`/business/product/${id}`);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -19,15 +19,11 @@ export const getRestaurantDetailOwner = createAsyncThunk(
   }
 );
 
-export const getCategoryDetail = createAsyncThunk(
-  "/getCategoryDetail",
-  async (id: number) => {
+export const getProductsList = createAsyncThunk(
+  "/getProductsList",
+  async () => {
     try {
-      const response = await authApi().get(
-        `/business/product/category/detail/${id}`
-      );
-      console.log(response);
-
+      const response = await authApi().get(`/business/product/list`);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError) {

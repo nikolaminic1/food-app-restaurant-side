@@ -10,9 +10,14 @@ import { persistReducer, persistStore } from "redux-persist";
 import { windowReducer } from "./store/slice/windowSlice";
 import { jwtReducer, userReducer } from "./store/slice/auth";
 import {
+  categoryDetailReducer,
   restaurantDetailReducer,
-  restaurantsListReducer,
 } from "./store/slice/restaurants";
+import {
+  productDetailReducer,
+  productsListReducer,
+} from "./store/slice/products";
+import { orderDetailReducer, ordersListReducer } from "./store/slice/order";
 // import { logoutReducer s} from "./store/slice/auth";
 
 const persistConfig = {
@@ -25,9 +30,19 @@ const persistConfig = {
 
 // });
 
+const productReducer = combineReducers({
+  productsList: productsListReducer,
+  productDetail: productDetailReducer,
+});
+
 const restaurantsReducer = combineReducers({
-  restaurantsList: restaurantsListReducer,
   restaurantDetail: restaurantDetailReducer,
+  categoryDetail: categoryDetailReducer,
+});
+
+const orderReducer = combineReducers({
+  orderDetail: orderDetailReducer,
+  ordersList: ordersListReducer,
 });
 
 const authReducer = combineReducers({
@@ -48,6 +63,8 @@ const rootReducer = combineReducers({
   windowReducer: windowReducer,
   auth: authReducer,
   restaurant: restaurantsReducer,
+  order: orderReducer,
+  product: productReducer,
 });
 
 // const red = combineReducers({layout: layoutReducer})

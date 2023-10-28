@@ -40,7 +40,7 @@ const Register: FC<RegisterProps> = ({}): ReactElement => {
       })
     )
       .unwrap()
-      .then((res) => {
+      .then((res: string) => {
         if (res == "OK") {
           notification.success({
             message: "Successful registration",
@@ -51,7 +51,7 @@ const Register: FC<RegisterProps> = ({}): ReactElement => {
           redirect("/login");
         }
       })
-      .catch((error) => {
+      .catch((error: { message: string; code: any }) => {
         notification.error({
           message: "Error",
           description: `${

@@ -69,3 +69,62 @@ export const MainDivRatingIcon = styled.div`
 `;
 
 export const MainDivRestaurantPage = styled.div``;
+
+export const MainDivProductCategorySection = styled.div`
+  margin: 30px 0;
+`;
+export const MainDivCategoriesList = styled.div``;
+export const MainDivCategoryCard = styled.div`
+  padding: 10px;
+  .content-wrapper {
+    padding: 30px 20px;
+    border-radius: 20px;
+    background-color: #fafafa;
+
+    .content {
+      display: flex;
+      .info {
+        width: 50%;
+        p {
+          margin: 0;
+        }
+      }
+
+      .data {
+        width: 30%;
+        p {
+          margin: 0;
+        }
+      }
+      .control {
+        width: fit-content;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        a {
+          text-decoration: none;
+          color: black;
+        }
+      }
+    }
+  }
+`;
+
+export const MainDivCategoryDetail = styled.div``;
+export const MainDivProductCard = styled.div`
+  padding: 20px;
+  .content-wrapper {
+    display: flex;
+    height: 140px;
+    border-radius: 30px;
+    background-color: #fafafa;
+    overflow: hidden;
+    .image {
+      width: 30%;
+    }
+    .info {
+      padding: 10px;
+    }
+  }
+`;

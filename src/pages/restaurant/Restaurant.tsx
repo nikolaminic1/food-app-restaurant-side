@@ -1,7 +1,7 @@
 import React, { FC, ReactElement, useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { getRestaurantDetail } from "../../app/service/restaurants";
+import { getRestaurantDetailOwner } from "../../app/service/restaurants";
 import { MainDivRestaurantPage } from "../../style/RestaurantPages";
 import { RootState } from "../../app/store";
 import { Status } from "../../app/service/Status";
@@ -24,8 +24,7 @@ const Restaurant: FC<RestaurantProps> = ({}): ReactElement => {
   const { restaurant } = restaurantDetail;
   useEffect(() => {
     if (run.current === false) {
-      console.log(params.id);
-      dispatch(getRestaurantDetail(Number(params.id)))
+      dispatch(getRestaurantDetailOwner())
         .unwrap()
         .then((res) => {
           console.log(res);
@@ -55,27 +54,6 @@ const Restaurant: FC<RestaurantProps> = ({}): ReactElement => {
                   <DeliveryPrice amount={restaurant.priceOfDelivery} />
                 </div>
               </div>
-              <div className="products">
-                <div className="top-seller">
-                  <div className="row">
-                    {restaurant?.topSeller?.map((product, i) => {
-                      return (
-                        <div className="col-lg-6 col-12" key={i}>
-                          <ProductDetailCard product={product} key={i} />
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div className="categories">
-                  {restaurant?.productCategories?.map((category, i) => {
-                    return <ProductCategorySection category={category} />;
-                  })}
-                </div>
-              </div>
-            </div>
-            <div className="restaurant-order">
-              <RestaurantOrderSection id={restaurant?.id} />
             </div>
           </div>
         </MainDivRestaurantPage>

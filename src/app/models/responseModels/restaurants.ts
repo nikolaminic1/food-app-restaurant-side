@@ -22,6 +22,29 @@ export interface Variation {
 
 export interface ProductTag {}
 
+export interface Image {
+  dateCreated: number;
+  dateUpdated: number;
+  imageUrl: string;
+}
+
+export interface Appendices {
+  id: number;
+  nameOfAppendices: string;
+  doesAffectPrice: boolean;
+  price: number;
+  image: Image;
+}
+
+export interface AppendicesCategory {
+  id: number;
+  nameOfCategory: string;
+  isRequired: boolean;
+  appendicesList: Appendices[];
+  image: Image;
+  numberOfAllowed: number;
+}
+
 export interface Product {
   id: number;
   nameOfProduct: string;
@@ -34,7 +57,9 @@ export interface Product {
   preparationTime: number;
   availability: string;
   productTags: ProductTag[];
+  appendicesCategoryList: AppendicesCategory[];
   variations: Variation;
+  image: Image;
 }
 
 interface Tag {
@@ -45,10 +70,10 @@ interface Tag {
 
 export interface ProductCategory {
   id: number;
-  nameOfCategory: String;
-  descOfCategory: String;
-  categoryVisible: Boolean;
-  featured: Boolean;
+  nameOfCategory: string;
+  descOfCategory: string;
+  categoryVisible: boolean;
+  featured: boolean;
   productList: Product[];
 }
 
@@ -83,4 +108,8 @@ export interface RestaurantListResponse extends Response {
 
 export interface RestaurantDetailResponse extends Response {
   restaurant: Restaurant;
+}
+
+export interface CategoryDetailResponse extends Response {
+  category: ProductCategory;
 }

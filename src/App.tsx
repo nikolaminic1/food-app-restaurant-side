@@ -29,11 +29,12 @@ import Order from "./pages/order/Order";
 import PrivateRoutes from "./components/PrivateRoutes";
 import Login from "./pages/auth/Login";
 import Restaurant from "./pages/restaurant/Restaurant";
-import RestaurantCategories from "./pages/restaurant/RestaurantCategories";
-import Products from "./pages/restaurant/Products";
+import Products from "./pages/restaurant/ProductsList";
 import Product from "./pages/restaurant/Product";
 import Orders from "./pages/order/Orders";
 import Register from "./pages/auth/Register";
+import CategoriesList from "./pages/restaurant/CategoriesList";
+import CategoryDetail from "./pages/restaurant/CategoryDetail";
 
 function App() {
   return (
@@ -55,10 +56,10 @@ function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/restaurant" element={<Restaurant />} />
 
-                        <Route
-                          path="/categories"
-                          element={<RestaurantCategories />}
-                        />
+                        <Route path="/categories">
+                          <Route index={true} element={<CategoriesList />} />
+                          <Route path=":id" element={<CategoryDetail />} />
+                        </Route>
 
                         <Route path="/products">
                           <Route index={true} element={<Products />} />

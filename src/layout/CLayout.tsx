@@ -39,6 +39,7 @@ const CLayout: FC<LayoutProps> = ({ children }): ReactElement => {
   } = theme.useToken();
   const [modal, contextHolder] = Modal.useModal();
   const [modalType, setModalType] = useState(1);
+  const [selectedId, setSelectedId] = useState(1);
   const location = useLocation();
   const dispatch = useAppDispatch();
   const run = useRef(false);
@@ -47,13 +48,23 @@ const CLayout: FC<LayoutProps> = ({ children }): ReactElement => {
   });
 
   useEffect(() => {
-    if (run.current === false) {
-    }
+    console.log(location.pathname);
 
-    return () => {
-      run.current = true;
-    };
-  }, [modalType, location.pathname]);
+    switch (location.pathname) {
+      case "/":
+        setSelectedId(1);
+      case "/profile":
+        setSelectedId(1);
+      case "/restaurant":
+        setSelectedId(2);
+      case "/orders":
+        setSelectedId(3);
+      case "/categories":
+        setSelectedId(4);
+      case "/products":
+        setSelectedId(5);
+    }
+  }, [location.pathname]);
 
   const authLabel = () => {
     if (isAuthenticated) {
@@ -87,7 +98,8 @@ const CLayout: FC<LayoutProps> = ({ children }): ReactElement => {
           <Menu
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={["1"]}
+            // defaultSelectedKeys={[`${selectedId}`]}
+            // selectedKeys={[`${selectedId}`]}
             items={[
               {
                 key: "1",
@@ -132,7 +144,7 @@ const CLayout: FC<LayoutProps> = ({ children }): ReactElement => {
               {children}
             </div>
           </Content>
-          <Footer style={{ textAlign: "center" }}>Food App - Customer</Footer>
+          <Footer style={{ textAlign: "center" }}>Food App - Restaurant</Footer>
         </Layout>
       </Layout>
     </App>
