@@ -14,7 +14,32 @@ export const productsListState: ProductsListResponse = {
 };
 
 export const productDetailState: ProductDetailResponse = {
-  product: undefined,
+  product: {
+    id: 0,
+    nameOfProduct: "",
+    codeOfProduct: "",
+    aboutProduct: "",
+    priceOfProduct: 0,
+    discountPrice: 0,
+    discountPercentage: 0,
+    isOnDiscount: false,
+    preparationTime: 0,
+    availability: "",
+    appendicesCategoryList: [],
+    variation: {
+      id: 0,
+      name: "",
+      isRequired: false,
+      productVariationList: [],
+    },
+    image: {
+      id: 0,
+      name_of_image: "",
+      dateCreated: 0,
+      dateUpdated: 0,
+      imageUrl: "",
+    },
+  },
   status: Status.IDLE,
   error: undefined,
   statusCode: 0,

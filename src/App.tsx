@@ -30,11 +30,11 @@ import PrivateRoutes from "./components/PrivateRoutes";
 import Login from "./pages/auth/Login";
 import Restaurant from "./pages/restaurant/Restaurant";
 import Products from "./pages/restaurant/ProductsList";
-import Product from "./pages/restaurant/Product";
 import Orders from "./pages/order/Orders";
 import Register from "./pages/auth/Register";
 import CategoriesList from "./pages/restaurant/CategoriesList";
 import CategoryDetail from "./pages/restaurant/CategoryDetail";
+import ProductPage from "./pages/restaurant/ProductPage";
 
 function App() {
   return (
@@ -63,7 +63,7 @@ function App() {
 
                         <Route path="/products">
                           <Route index={true} element={<Products />} />
-                          <Route path=":id" element={<Product />} />
+                          <Route path=":id" element={<ProductPage />} />
                         </Route>
                       </Route>
                       <Route path="/login" element={<Login />} />

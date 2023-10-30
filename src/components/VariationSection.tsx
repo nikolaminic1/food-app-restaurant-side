@@ -1,0 +1,120 @@
+import React, { FC, ReactElement, useState, useEffect } from "react";
+import VariationNew from "./NewVariation";
+import VariationCard from "./VariationCard";
+import { Variation } from "../app/models/responseModels/restaurants";
+import { Button, FormInstance, Input, Modal } from "antd";
+import { emptyVariations } from "../app/store/actions/product";
+import VariationExisting from "./VariationExisting";
+
+interface Props {
+  variation: Variation;
+  form: FormInstance;
+}
+
+const VariationSection: FC<Props> = ({ form, variation }): ReactElement => {
+  const [isModalOpenVariationAdd, setIsModalOpenVariationAdd] = useState(false);
+  const [newVariation, setNewVariation] = useState(false);
+  const [newVariationName, setNewVariationName] = useState("");
+  const [doesHaveVariations, setDoesHaveVariations] = useState(false);
+
+  const handleCancelModalAddVariation = () => {
+    setIsModalOpenVariationAdd(false);
+  };
+
+  const onChangeVariationName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // console.log("Change:", e.target.value);
+    setNewVariationName(e.target.value);
+  };
+
+  const showModalModalAddVariation = () => {
+    setIsModalOpenVariationAdd(true);
+  };
+
+  const deleteVatiation = () => {
+    setDoesHaveVariations(false);
+    setNewVariation(true);
+    emptyVariations();
+    form.setFieldValue("product_variations", []);
+    form.setFieldValue("new_product_variations", []);
+    form.setFieldValue("variation", "");
+    form.setFieldValue("variation_id", null);
+
+    // console.log(form.getFieldValue("product_variations"));
+  };
+
+  const handleOkModalAddVariation = () => {
+    setIsModalOpenVariationAdd(false);
+    setDoesHaveVariations(true);
+    setNewVariation(true);
+    form.setFieldValue("variation", newVariationName);
+  };
+
+  const deleteVariation = () => {
+    setDoesHaveVariations(false);
+    setNewVariation(true);
+    emptyVariations();
+    form.setFieldValue("product_variations", []);
+    form.setFieldValue("new_product_variations", []);
+    form.setFieldValue("variation", "");
+    form.setFieldValue("variation_id", null);
+
+    // console.log(form.getFieldValue("product_variations"));
+  };
+
+  const newV = () => {
+    return (
+      <div className="new-variation">
+        <VariationNew
+          newVariation={newVariation}
+          deleteVariation={deleteVariation}
+          name={newVariationName}
+        />
+      </div>
+    );
+  };
+
+  const existingV = () => {
+    if (variation.name == "") {
+      return (
+        <VariationExisting
+          deleteVariation={deleteVariation}
+          variation={variation}
+        />
+      );
+    }
+  };
+
+  return (
+    <>
+      <h4 className="text-start pt-3 pb-3">Variation</h4>
+      {doesHaveVariations ? (
+        <>
+          <div className="variations text-start">
+            {newVariation == true
+              ? // there is problem somewhere here, it does not show new variation
+                newV()
+              : existingV()}
+          </div>
+        </>
+      ) : (
+        <>
+          <Modal
+            title="Add variation by typing name"
+            cancelText="Cancel"
+            open={isModalOpenVariationAdd}
+            onOk={handleOkModalAddVariation}
+            onCancel={handleCancelModalAddVariation}
+          >
+            <h3>Variation name</h3>
+            <Input onChange={onChangeVariationName} />
+          </Modal>
+          <Button onClick={showModalModalAddVariation} size="large">
+            Add variation
+          </Button>
+        </>
+      )}
+    </>
+  );
+};
+
+export default VariationSection;

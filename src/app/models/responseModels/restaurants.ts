@@ -10,7 +10,8 @@ export interface ProductVariation {
   priceOfVariation: number;
   priceOfVariationDiscount: number;
   totalPrice: number;
-  isOnDiscount: Boolean;
+  isOnDiscount: boolean;
+  image: Image;
 }
 
 export interface Variation {
@@ -23,6 +24,8 @@ export interface Variation {
 export interface ProductTag {}
 
 export interface Image {
+  id: number;
+  name_of_image: string;
   dateCreated: number;
   dateUpdated: number;
   imageUrl: string;
@@ -49,16 +52,16 @@ export interface Product {
   id: number;
   nameOfProduct: string;
   codeOfProduct: string;
+  aboutProduct: string;
   priceOfProduct: number;
   discountPrice: number;
   discountPercentage: number;
   isOnDiscount: boolean;
-  aboutProduct: string;
   preparationTime: number;
   availability: string;
-  productTags: ProductTag[];
+  // productTags: ProductTag[];
   appendicesCategoryList: AppendicesCategory[];
-  variations: Variation;
+  variation: Variation;
   image: Image;
 }
 

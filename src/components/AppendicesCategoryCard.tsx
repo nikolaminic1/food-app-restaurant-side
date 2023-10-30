@@ -6,7 +6,7 @@ interface Props {
 }
 
 const AppendicesCategoryCard: FC<Props> = ({ category }): ReactElement => {
-  return <div></div>;
+  return <div>{category.id}</div>;
 };
 
 export default AppendicesCategoryCard;

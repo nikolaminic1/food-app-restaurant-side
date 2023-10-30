@@ -18,6 +18,7 @@ const CategoryDetail: FC<Props> = ({}): ReactElement => {
   const dispatch = useAppDispatch();
   const params = useParams();
   const run = useRef(false);
+
   useEffect(() => {
     if (run.current === false) {
       dispatch(getCategoryDetail(Number(params.id)))
@@ -34,7 +35,6 @@ const CategoryDetail: FC<Props> = ({}): ReactElement => {
       run.current = true;
     };
   }, []);
-  console.log(categoryDetail);
 
   return (
     <>

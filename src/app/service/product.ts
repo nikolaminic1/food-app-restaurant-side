@@ -6,7 +6,7 @@ export const getProductDetail = createAsyncThunk(
   "/getProductDetail",
   async (id: number) => {
     try {
-      const response = await authApi().get(`/business/product/${id}`);
+      const response = await authApi().get(`/business/products/product/${id}`);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError) {

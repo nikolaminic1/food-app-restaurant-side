@@ -6,10 +6,19 @@ import {
   productsListState,
 } from "../../initial_state/product";
 
-const productDetailSlice = createSlice({
-  name: "categoryDetail",
+export const productDetailSlice = createSlice({
+  name: "product detail",
+  reducers: {
+    emptyVariations(state) {
+      state.product.variation = {
+        id: 0,
+        name: "",
+        isRequired: false,
+        productVariationList: [],
+      };
+    },
+  },
   initialState: productDetailState,
-  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getProductDetail.pending, (state, action) => {
       return {
@@ -18,8 +27,6 @@ const productDetailSlice = createSlice({
       };
     });
     builder.addCase(getProductDetail.fulfilled, (state, action) => {
-      console.log(action.payload);
-
       return {
         ...state,
         status: Status.SUCCEED,
