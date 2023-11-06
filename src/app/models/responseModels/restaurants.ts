@@ -62,7 +62,7 @@ export interface Product {
   // productTags: ProductTag[];
   appendicesCategoryList: AppendicesCategory[];
   variation: Variation;
-  image: Image;
+  productImage: Image;
 }
 
 interface Tag {

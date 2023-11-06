@@ -7,4 +7,7 @@ export interface ProductDetailResponse extends Response {
 
 export interface ProductsListResponse extends Response {
   products: Product[];
+  next: string;
+  previous: string;
+  count: number;
 }

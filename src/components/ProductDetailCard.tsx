@@ -19,7 +19,7 @@ const ProductDetailCard: FC<ProductDetailCardProps> = ({
         <div className="image">
           <Image
             src={`${import.meta.env["VITE_SERVER_URL"]}${
-              product?.image?.imageUrl
+              product?.productImage?.imageUrl
             }`}
             style={{ objectFit: "contain" }}
             width={"100%"}

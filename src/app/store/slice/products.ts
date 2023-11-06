@@ -59,7 +59,8 @@ const productsListSlice = createSlice({
       return {
         ...state,
         status: Status.SUCCEED,
-        products: action.payload,
+        products: action.payload.items,
+        count: action.payload.count,
       };
     });
     builder.addCase(getProductsList.rejected, (state, action) => {

@@ -23,3 +23,4 @@ export const MainDivProductDetail = styled.div`
 
 export const MainVariationCardDiv = styled.div``;
 export const MainDivAppendices = styled.div``;
+export const MainDivProductsList = styled.div``;

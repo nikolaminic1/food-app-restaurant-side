@@ -22,7 +22,12 @@ import {
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { RcFile, UploadProps } from "antd/es/upload";
-import { Image, Product } from "../../app/models/responseModels/restaurants";
+import {
+  AppendicesCategory,
+  Image,
+  Product,
+  Variation,
+} from "../../app/models/responseModels/restaurants";
 import TextArea from "antd/es/input/TextArea";
 import VariationSection from "../../components/VariationSection";
 import { getBase64 } from "../../app/modules/image";
@@ -62,7 +67,7 @@ export const SubmitButton = ({ form }: { form: FormInstance }) => {
 
   return (
     <Button size="large" type="primary" disabled={!submittable}>
-      Sačuvaj
+      Save
     </Button>
   );
 };
@@ -77,12 +82,14 @@ const ProductPage: FC<Props> = ({}): ReactElement => {
   const [doesHaveVariations, setDoesHaveVariations] = useState(false);
   const [newVariationName, setNewVariationName] = useState("");
   const [newVariation, setNewVariation] = useState(false);
+  const [product, setProduct] = useState<Product | undefined>();
+
   const productDetail = useAppSelector((state: RootState) => {
     return state.product.productDetail;
   });
 
   const [form] = Form.useForm();
-  const { product } = productDetail;
+
   const run = useRef(false);
   const dispatch = useAppDispatch();
 
@@ -91,7 +98,21 @@ const ProductPage: FC<Props> = ({}): ReactElement => {
       dispatch(getProductDetail(Number(id)))
         .unwrap()
         .then((data: Product) => {
-          createFileList(data.image);
+          createFileList(data.productImage);
+          form.setFieldsValue({
+            name_of_product: data.nameOfProduct,
+            code_of_product: data.codeOfProduct,
+            about_product: data.aboutProduct,
+            price_of_product: data.priceOfProduct,
+            discount_price: data.discountPrice,
+            is_on_discount: data.isOnDiscount,
+            preparation_time: data.preparationTime,
+            availability: data.availability,
+            variation: data.variation,
+            appendicesCategoryList: data.appendicesCategoryList,
+          });
+          setProduct(data);
+          console.log(data);
         })
         .catch((error) => {
           console.log(error);
@@ -174,7 +195,7 @@ const ProductPage: FC<Props> = ({}): ReactElement => {
             <>Error</>
           ) : (
             <>
-              {product && (
+              {productDetail.product && (
                 <MainDivProductDetail>
                   <div className="form">
                     <Form
@@ -196,6 +217,7 @@ const ProductPage: FC<Props> = ({}): ReactElement => {
                             onChange={handleChangeMainImage}
                             onRemove={onRemoveMainImage}
                             beforeUpload={beforeUploadMainImage}
+                            maxCount={1}
                             // {...props}
                           >
                             {uploadButton}
@@ -219,14 +241,15 @@ const ProductPage: FC<Props> = ({}): ReactElement => {
                       </div>
                       <div className="variation">
                         <VariationSection
+                          product={product}
                           form={form}
-                          variation={product.variation}
+                          // variation={product.variation}
                         />
                       </div>
                       <div className="appendices mt-3">
                         <AppendicesSection
                           form={form}
-                          appendices={product.appendicesCategoryList}
+                          // appendices={product.appendicesCategoryList}
                         />
                       </div>
                       <Form.Item

@@ -35,6 +35,7 @@ import Register from "./pages/auth/Register";
 import CategoriesList from "./pages/restaurant/CategoriesList";
 import CategoryDetail from "./pages/restaurant/CategoryDetail";
 import ProductPage from "./pages/restaurant/ProductPage";
+import NewProductPage from "./pages/restaurant/NewProductPage";
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
                         <Route path="/products">
                           <Route index={true} element={<Products />} />
                           <Route path=":id" element={<ProductPage />} />
+                          <Route path="new" element={<NewProductPage />} />
                         </Route>
                       </Route>
                       <Route path="/login" element={<Login />} />

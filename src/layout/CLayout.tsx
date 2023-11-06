@@ -48,6 +48,15 @@ const CLayout: FC<LayoutProps> = ({ children }): ReactElement => {
   });
 
   useEffect(() => {
+    // if token does not exist dispatch logout
+    // if access token exist try verify
+    // if access token is not valid try refresh
+    // if refresh does not exist or it is not valid dispatch logout
+    // check if is authenticated
+    // if is authenticated allow redirect
+  }, []);
+
+  useEffect(() => {
     console.log(location.pathname);
 
     switch (location.pathname) {

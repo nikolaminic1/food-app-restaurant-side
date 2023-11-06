@@ -51,26 +51,13 @@ const VariationNew: FC<VariationNewProps> = ({
             labelAlign="left"
             wrapperCol={{ sm: 6 }}
             labelCol={{ sm: 24 }}
-            label="Ime varijacije"
+            label="Variation name"
             initialValue={name}
             name={"variation"}
+            className="mt-4"
           >
             <Input />
           </Form.Item>
-
-          <span>
-            <Button
-              style={
-                {
-                  // marginLeft: "30px",
-                }
-              }
-              onClick={deleteVariation}
-              danger
-            >
-              Delete variation
-            </Button>
-          </span>
         </h3>
       </div>
       <div className="product-variations">

@@ -6,6 +6,9 @@ import { Status } from "../service/Status";
 
 export const productsListState: ProductsListResponse = {
   products: [],
+  next: "",
+  previous: "",
+  count: 1,
   status: Status.IDLE,
   error: undefined,
   statusCode: 0,
@@ -32,7 +35,7 @@ export const productDetailState: ProductDetailResponse = {
       isRequired: false,
       productVariationList: [],
     },
-    image: {
+    productImage: {
       id: 0,
       name_of_image: "",
       dateCreated: 0,

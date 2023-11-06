@@ -1,21 +1,34 @@
 import React, { FC, ReactElement, useState, useEffect } from "react";
-import VariationNew from "./NewVariation";
+import VariationNew from "./VariationNew";
 import VariationCard from "./VariationCard";
-import { Variation } from "../app/models/responseModels/restaurants";
+import { Product, Variation } from "../app/models/responseModels/restaurants";
 import { Button, FormInstance, Input, Modal } from "antd";
 import { emptyVariations } from "../app/store/actions/product";
 import VariationExisting from "./VariationExisting";
 
 interface Props {
-  variation: Variation;
+  // variation: Variation;
   form: FormInstance;
+  product: Product | undefined;
 }
 
-const VariationSection: FC<Props> = ({ form, variation }): ReactElement => {
+const VariationSection: FC<Props> = ({ form, product }): ReactElement => {
   const [isModalOpenVariationAdd, setIsModalOpenVariationAdd] = useState(false);
   const [newVariation, setNewVariation] = useState(false);
   const [newVariationName, setNewVariationName] = useState("");
   const [doesHaveVariations, setDoesHaveVariations] = useState(false);
+
+  useEffect(() => {}, []);
+
+  useEffect(() => {
+    if (product?.variation) {
+      setDoesHaveVariations(true);
+      console.log("1");
+    } else {
+      setDoesHaveVariations(false);
+      console.log("2");
+    }
+  }, [product]);
 
   const handleCancelModalAddVariation = () => {
     setIsModalOpenVariationAdd(false);
@@ -28,18 +41,6 @@ const VariationSection: FC<Props> = ({ form, variation }): ReactElement => {
 
   const showModalModalAddVariation = () => {
     setIsModalOpenVariationAdd(true);
-  };
-
-  const deleteVatiation = () => {
-    setDoesHaveVariations(false);
-    setNewVariation(true);
-    emptyVariations();
-    form.setFieldValue("product_variations", []);
-    form.setFieldValue("new_product_variations", []);
-    form.setFieldValue("variation", "");
-    form.setFieldValue("variation_id", null);
-
-    // console.log(form.getFieldValue("product_variations"));
   };
 
   const handleOkModalAddVariation = () => {
@@ -74,22 +75,27 @@ const VariationSection: FC<Props> = ({ form, variation }): ReactElement => {
   };
 
   const existingV = () => {
-    if (variation.name == "") {
-      return (
-        <VariationExisting
-          deleteVariation={deleteVariation}
-          variation={variation}
-        />
-      );
-    }
+    return (
+      <VariationExisting
+        deleteVariation={deleteVariation}
+        variation={product?.variation}
+      />
+    );
   };
 
   return (
     <>
-      <h4 className="text-start pt-3 pb-3">Variation</h4>
+      <h4 className="text-start pt-3 pb-1">Variation</h4>
+
       {doesHaveVariations ? (
         <>
           <div className="variations text-start">
+            <div className="mt-2">
+              <Button onClick={deleteVariation} danger>
+                Delete variation
+              </Button>
+            </div>
+
             {newVariation == true
               ? // there is problem somewhere here, it does not show new variation
                 newV()
@@ -108,7 +114,7 @@ const VariationSection: FC<Props> = ({ form, variation }): ReactElement => {
             <h3>Variation name</h3>
             <Input onChange={onChangeVariationName} />
           </Modal>
-          <Button onClick={showModalModalAddVariation} size="large">
+          <Button onClick={showModalModalAddVariation} size="middle">
             Add variation
           </Button>
         </>
