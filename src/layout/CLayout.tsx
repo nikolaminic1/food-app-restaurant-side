@@ -26,6 +26,7 @@ import { App } from "antd";
 import { BiSolidCategory } from "react-icons/bi";
 import { PiHamburger, PiHamburgerThin } from "react-icons/pi";
 import { logout } from "../app/store/actions/auth";
+import { SlLocationPin } from "react-icons/sl";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -88,6 +89,14 @@ const CLayout: FC<LayoutProps> = ({ children }): ReactElement => {
       <Layout style={{ minHeight: "100vh" }} className="main-layout">
         {contextHolder}
         <Sider
+          style={{
+            overflow: "auto",
+            height: "100vh",
+            position: "fixed",
+            left: 0,
+            top: 0,
+            bottom: 0,
+          }}
           className="sider"
           breakpoint="lg"
           collapsedWidth="0"
@@ -122,25 +131,34 @@ const CLayout: FC<LayoutProps> = ({ children }): ReactElement => {
               },
               {
                 key: "3",
+                icon: <SlLocationPin />,
+                label: <Link to="/address">Address</Link>,
+              },
+              {
+                key: "4",
                 icon: <BsCart4 />,
                 label: <Link to="/orders">Orders</Link>,
               },
               {
-                key: "4",
+                key: "5",
                 icon: <BiSolidCategory />,
                 label: <Link to="/categories">Categories</Link>,
               },
               {
-                key: "5",
+                key: "6",
                 icon: <PiHamburger />,
-                label: <Link to="/products">Products</Link>,
+                label: (
+                  <Link to="/products?page=1&per_page=20&order=1&visible=1">
+                    Products
+                  </Link>
+                ),
               },
             ]}
           >
             {/* <Menu.Item></Menu.Item> */}
           </Menu>
         </Sider>
-        <Layout>
+        <Layout style={{ marginLeft: 200 }}>
           {/* <Header style={{ padding: 0, background: colorBgContainer }} /> */}
           <Content style={{ margin: "24px 16px 0" }}>
             <div

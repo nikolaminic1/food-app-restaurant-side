@@ -113,7 +113,7 @@ export const MainDivCategoryCard = styled.div`
 
 export const MainDivCategoryDetail = styled.div``;
 export const MainDivProductCard = styled.div`
-  padding: 20px;
+  padding: 10px;
   .content-wrapper {
     display: flex;
     height: 140px;

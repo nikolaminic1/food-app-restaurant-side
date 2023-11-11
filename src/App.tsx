@@ -36,6 +36,7 @@ import CategoriesList from "./pages/restaurant/CategoriesList";
 import CategoryDetail from "./pages/restaurant/CategoryDetail";
 import ProductPage from "./pages/restaurant/ProductPage";
 import NewProductPage from "./pages/restaurant/NewProductPage";
+import Address from "./pages/restaurant/Address";
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
                         </Route>
                         <Route path="/" element={<Home />} />
                         <Route path="/restaurant" element={<Restaurant />} />
+                        <Route path="/address" element={<Address />} />
 
                         <Route path="/categories">
                           <Route index={true} element={<CategoriesList />} />

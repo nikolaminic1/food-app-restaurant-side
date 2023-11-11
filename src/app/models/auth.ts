@@ -4,4 +4,10 @@ export interface User {
   email: string;
 }
 
-export interface Address {}
+export interface Address {
+  streetName: string;
+  buildingNumber: string;
+  flatNumber: string;
+  zipCode: string;
+  cityName: string;
+}

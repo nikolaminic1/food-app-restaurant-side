@@ -65,6 +65,19 @@ export function authApi() {
   });
 }
 
+export function authApiForm() {
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem("access")}`,
+    "Content-Type": "application/form-data",
+    Accept: "*/*",
+  };
+
+  return axios.create({
+    baseURL: "http://localhost:8070/api/v1",
+    headers: headers,
+  });
+}
+
 export function jwtApi() {
   const headers = {
     "Content-Type": "application/json",

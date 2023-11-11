@@ -32,55 +32,101 @@ const ProductsList: FC<Props> = ({}): ReactElement => {
 
   const paginationChange = (page: number, pageSize: number) => {
     setFilters({ ...filters, page: page });
-    setSearchParams({ page: `${page}` });
+    setSearchParams((searchParams) => {
+      searchParams.set("page", `${page}`);
+      return searchParams;
+    });
     applyFilters();
   };
   const pageSizeChange = (current: number, size: number) => {
     setFilters({ ...filters, per_page: size });
-    setSearchParams({ per_page: `${size}` });
+    setSearchParams((searchParams) => {
+      searchParams.set("per_page", `${size}`);
+      return searchParams;
+    });
     applyFilters();
   };
   const onChangeSwitch = (value: boolean) => {
     setFilters({ ...filters, visible: Number(value) });
+    setSearchParams((searchParams) => {
+      searchParams.set("visible", `${Number(value)}`);
+      return searchParams;
+    });
+    applyFilters();
   };
   const onChangeOrder = (value: number) => {
     setFilters({ ...filters, order: value });
+    setSearchParams((searchParams) => {
+      searchParams.set("order", `${value}`);
+      return searchParams;
+    });
+    applyFilters();
   };
 
   useEffect(() => {
     if (run.current === false) {
-      const per_page = Number(searchParams.get("order"));
-      const order = Number(searchParams.get("order"));
-      dispatch(
-        getProductsList({
-          page: Number(searchParams.get("page")),
-          per_page: per_page == 0 ? 1 : per_page,
-          order: order == 0 ? 1 : order,
-          visible: Number(searchParams.get("visible")),
-        })
-      )
-        .unwrap()
-        .then((res) => {
-          console.log(res);
-          notification.success({
-            message: "Products loaded",
-            description: "Successfully loaded products list",
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-          notification.error({
-            message: error.name,
-          });
-        });
+      getProducts();
     }
     return () => {
       run.current = true;
     };
   }, []);
 
+  // useEffect(() => {
+  //   getProducts();
+  // }, [location, searchParams]);
+
+  const getProducts = () => {
+    const page = Number(searchParams.get("page")) - 1;
+    const per_page = Number(searchParams.get("per_page"));
+    const order = Number(searchParams.get("order"));
+    const visible = Number(searchParams.get("visible"));
+    setFilters({
+      ...filters,
+      page: page,
+      per_page: per_page,
+      order: order,
+      visible: visible,
+    });
+
+    dispatch(
+      getProductsList({
+        page: page,
+        per_page: per_page == 0 ? 1 : per_page,
+        order: order == 0 ? 1 : order,
+        visible: visible,
+      })
+    )
+      .unwrap()
+      .then((res) => {
+        console.log(res);
+        notification.success({
+          message: "Products loaded",
+          description: "Successfully loaded products list",
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        notification.error({
+          message: error.name,
+        });
+      });
+  };
+
   const applyFilters = () => {
-    dispatch(getProductsList(filters))
+    const page = Number(searchParams.get("page")) - 1;
+    const per_page = Number(searchParams.get("per_page"));
+    const order = Number(searchParams.get("order"));
+    const visible = Number(searchParams.get("visible"));
+
+    dispatch(
+      getProductsList({
+        page: page,
+        per_page: per_page,
+        order: order,
+        visible: visible,
+      })
+    )
       .unwrap()
       .then((res) => {
         console.log(res);
@@ -89,8 +135,6 @@ const ProductsList: FC<Props> = ({}): ReactElement => {
         console.log(error);
       });
   };
-
-  console.log(products.products);
 
   return (
     <MainDivProductsList>
@@ -127,12 +171,12 @@ const ProductsList: FC<Props> = ({}): ReactElement => {
             placeholder="Order"
           />
         </div>
-        <div className="button ms-4">
-          <Button onChange={applyFilters}>Apply filters</Button>
-        </div>
+        {/* <div className="button ms-4">
+          <Button onClick={applyFilters}>Apply filters</Button>
+        </div> */}
       </div>
       <div className="products mt-3">
-        <div className="row">
+        <div className="row gx-1 gy-1">
           {products.status == Status.LOADING ? (
             <CSpin />
           ) : (
@@ -150,11 +194,13 @@ const ProductsList: FC<Props> = ({}): ReactElement => {
       </div>
       <div className="pagination mt-5 justify-content-center">
         <Pagination
+          key={Number(filters)}
           defaultCurrent={filters.page}
           total={products.count}
           onChange={paginationChange}
           onShowSizeChange={pageSizeChange}
-          defaultPageSize={20}
+          // defaultPageSize={filters.per_page}
+          pageSize={filters.per_page}
           showSizeChanger={true}
         />
       </div>

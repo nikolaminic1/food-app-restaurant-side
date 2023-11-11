@@ -1,7 +1,12 @@
-import { jwtResponse, registerResponse } from "./../../initial_state/auth";
+import {
+  addressResponseState,
+  jwtResponse,
+  registerResponse,
+} from "./../../initial_state/auth";
 import { createSlice } from "@reduxjs/toolkit";
 import { userState } from "../../initial_state/auth";
 import {
+  getAddress,
   getMyProfile,
   login,
   refresh,
@@ -166,7 +171,36 @@ export const jwtSlice = createSlice({
   },
 });
 
+const addressSlice = createSlice({
+  name: "address",
+  initialState: addressResponseState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getAddress.pending, (state, action) => {
+      return {
+        ...state,
+        status: Status.LOADING,
+      };
+    });
+    builder.addCase(getAddress.fulfilled, (state, action) => {
+      return {
+        ...state,
+        status: Status.SUCCEED,
+        address: action.payload,
+      };
+    });
+    builder.addCase(getAddress.rejected, (state, action) => {
+      return {
+        ...state,
+        status: Status.REJECTED,
+        message: String(action.payload),
+      };
+    });
+  },
+});
+
 export const userReducer = userSlice.reducer;
+export const addressReducer = addressSlice.reducer;
 // export const checkAuthReducer = checkAuthSlice.reducer;
 // export const loginReducer = loginSlice.reducer;
 export const jwtReducer = jwtSlice.reducer;

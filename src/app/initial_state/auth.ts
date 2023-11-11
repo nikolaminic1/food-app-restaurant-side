@@ -1,6 +1,7 @@
 import { Status } from "./../service/Status";
 import { User } from "../models/auth";
 import {
+  AddressResponse,
   JWTResponse,
   RegisterResponse,
   UserResponse,
@@ -36,4 +37,18 @@ export const registerResponse: RegisterResponse = {
   error: undefined,
   statusCode: 0,
   timeStamp: 0,
+};
+
+export const addressResponseState: AddressResponse = {
+  address: {
+    streetName: "",
+    buildingNumber: "",
+    flatNumber: "",
+    zipCode: "",
+  },
+  status: Status.IDLE,
+  error: undefined,
+  statusCode: 0,
+  timeStamp: 0,
+  message: "",
 };

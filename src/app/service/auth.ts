@@ -109,3 +109,35 @@ export const refresh = createAsyncThunk("/refresh", async () => {
     throw Error;
   }
 });
+
+export const getAddress = createAsyncThunk(
+  "/get-business address",
+  async () => {
+    try {
+      const response = await authApi().get("/business/address");
+      return response.data;
+    } catch (error) {
+      if (error instanceof AxiosError) console.log(error.message);
+      throw Error;
+    }
+  }
+);
+
+export const updateAddress = createAsyncThunk(
+  "/update business address",
+  async (data: Object) => {
+    try {
+      const response = await authApi().post("/business/address", data);
+      return response.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error);
+
+        throw new AxiosError(
+          String(error.response?.data.message),
+          String(error.response?.status)
+        );
+      }
+    }
+  }
+);

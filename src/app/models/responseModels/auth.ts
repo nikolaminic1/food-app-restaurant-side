@@ -1,5 +1,5 @@
 import { Response } from "../../service/Response";
-import { User } from "../auth";
+import { Address, User } from "../auth";
 
 export interface UserResponse extends Response {
   user: User;
@@ -19,6 +19,10 @@ export interface JWTResponse extends Response {
 
 export interface RegisterResponse extends Response {
   message: string;
+}
+
+export interface AddressResponse extends Response {
+  address: Address;
 }
 
 export interface RegisterRequest {

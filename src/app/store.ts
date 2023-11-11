@@ -8,7 +8,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { windowReducer } from "./store/slice/windowSlice";
-import { jwtReducer, userReducer } from "./store/slice/auth";
+import { addressReducer, jwtReducer, userReducer } from "./store/slice/auth";
 import {
   categoryDetailReducer,
   restaurantDetailReducer,
@@ -48,6 +48,7 @@ const orderReducer = combineReducers({
 const authReducer = combineReducers({
   user: userReducer,
   jwt: jwtReducer,
+  address: addressReducer,
   // checkAuth: logoutReducer,
   // verify,
   // getAccessToken,
