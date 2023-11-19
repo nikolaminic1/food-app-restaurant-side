@@ -86,7 +86,7 @@ export const verify = createAsyncThunk("/verify", async () => {
     const data = {
       token: token,
     };
-    const response = await genericApi().post("/auth/jwt/verify", data);
+    const response = await genericApi().post("/auth/jwt/verify", token);
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) console.log(error.message);

@@ -13,6 +13,7 @@ import {
   Link,
   redirect,
   useLocation,
+  useNavigate,
   useParams,
   useSearchParams,
 } from "react-router-dom";
@@ -21,7 +22,7 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { RootState } from "../app/store";
 import { closeModals } from "../app/store/actions/layouyActions";
 import { Button } from "antd";
-import { login, register } from "../app/service/auth";
+import { login, register, verify } from "../app/service/auth";
 import { App } from "antd";
 import { BiSolidCategory } from "react-icons/bi";
 import { PiHamburger, PiHamburgerThin } from "react-icons/pi";
@@ -42,6 +43,7 @@ const CLayout: FC<LayoutProps> = ({ children }): ReactElement => {
   const [modalType, setModalType] = useState(1);
   const [selectedId, setSelectedId] = useState(1);
   const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const run = useRef(false);
   const isAuthenticated = useAppSelector((state: RootState) => {
@@ -49,6 +51,22 @@ const CLayout: FC<LayoutProps> = ({ children }): ReactElement => {
   });
 
   useEffect(() => {
+    if (run.current === false) {
+      if (!isAuthenticated) {
+        navigate("/login");
+      }
+      dispatch(verify())
+        .unwrap()
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    return () => {
+      run.current = true;
+    };
     // if token does not exist dispatch logout
     // if access token exist try verify
     // if access token is not valid try refresh
@@ -57,24 +75,24 @@ const CLayout: FC<LayoutProps> = ({ children }): ReactElement => {
     // if is authenticated allow redirect
   }, []);
 
-  useEffect(() => {
-    console.log(location.pathname);
+  // useEffect(() => {
+  //   console.log(location.pathname);
 
-    switch (location.pathname) {
-      case "/":
-        setSelectedId(1);
-      case "/profile":
-        setSelectedId(1);
-      case "/restaurant":
-        setSelectedId(2);
-      case "/orders":
-        setSelectedId(3);
-      case "/categories":
-        setSelectedId(4);
-      case "/products":
-        setSelectedId(5);
-    }
-  }, [location.pathname]);
+  //   switch (location.pathname) {
+  //     case "/":
+  //       setSelectedId(1);
+  //     case "/profile":
+  //       setSelectedId(1);
+  //     case "/restaurant":
+  //       setSelectedId(2);
+  //     case "/orders":
+  //       setSelectedId(3);
+  //     case "/categories":
+  //       setSelectedId(4);
+  //     case "/products":
+  //       setSelectedId(5);
+  //   }
+  // }, [location.pathname]);
 
   const authLabel = () => {
     if (isAuthenticated) {
